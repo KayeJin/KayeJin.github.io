@@ -28,7 +28,7 @@
 <meta property="og:description" content="2024 paper: Privacy-Preserving Sentiment Analysis Using Homomorphic Encryption and Attention Mechanisms">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-21T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-21T06:32:29.531Z">
+<meta property="article:modified_time" content="2025-09-21T07:20:20.698Z">
 <meta property="article:author" content="Jin Peng">
 <meta property="article:tag" content="CKKS">
 <meta name="twitter:card" content="summary">
@@ -47,7 +47,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Jin Peng","sameAs":[]},"dateCreated":"2025-09-21T12:00:00+08:00","dateModified":"2025-09-21T14:32:29+08:00","datePublished":"2025-09-21T12:00:00+08:00","description":"2024 paper: Privacy-Preserving Sentiment Analysis Using Homomorphic Encryption and Attention Mechanisms","headline":"CKKS + attention mechanism + sentiment analysis","mainEntityOfPage":{"@type":"WebPage","@id":"2025/09/CKKS + attention mechanism + sentiment analysis/"},"publisher":{"@type":"Organization","name":"Jin Peng","sameAs":[]},"url":"2025/09/CKKS + attention mechanism + sentiment analysis/","keywords":"CKKS","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Jin Peng","sameAs":[]},"dateCreated":"2025-09-21T12:00:00+08:00","dateModified":"2025-09-21T15:20:20+08:00","datePublished":"2025-09-21T12:00:00+08:00","description":"2024 paper: Privacy-Preserving Sentiment Analysis Using Homomorphic Encryption and Attention Mechanisms","headline":"CKKS + attention mechanism + sentiment analysis","mainEntityOfPage":{"@type":"WebPage","@id":"2025/09/CKKS + attention mechanism + sentiment analysis/"},"publisher":{"@type":"Organization","name":"Jin Peng","sameAs":[]},"url":"2025/09/CKKS + attention mechanism + sentiment analysis/","keywords":"CKKS","image":[]}</script>
   
 </head>
 <body>
@@ -77,7 +77,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="categories/PPML/">PPML</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-09-21T04:00:00.000Z">2025-09-21</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-09-21T06:32:29.531Z">2025-09-21</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2025-09-21T04:00:00.000Z">2025-09-21</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2025-09-21T07:20:20.698Z">2025-09-21</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -90,27 +90,62 @@
   </div>
   </div><article class="md-text content"><p>2024 paper: Privacy-Preserving Sentiment Analysis Using Homomorphic Encryption and Attention Mechanisms</p>
 <span id="more"></span>
+<h1 id="introduction"><a class="markdownIt-Anchor" href="#introduction"></a> Introduction</h1>
 <ul>
-<li>Two tasks on privacy-preserving prediction on ML:
+<li>
+<p>Two tasks on privacy-preserving prediction on ML:</p>
 <ul>
 <li>protect service provider’s model from the client</li>
 <li>protect client’s evaluation data from service provider</li>
 </ul>
 </li>
-<li>One solution is to use <strong>Homomorphic Encryption (HE)</strong>
+<li>
+<p>One solution is to use <strong>Homomorphic Encryption (HE)</strong></p>
 <blockquote>
 <p>“While HE has been used for the inference phase in neural network models, the computations on HE data can be computationally intensive, making it difficult to perform complex computations in real time.”</p>
 </blockquote>
+<ul>
+<li>limitation:  backpropagation, partial differentiations, exponentiations, tangents, matrix multiplications, …  =&gt; pre-processing, only in inference phase</li>
+<li>approximate activation functions to low-degree polynomials or piecewise linear functions: square function, sine function, ReLU function</li>
+<li>Pre-trained activation functions to lookup tables: sigmoid function, tanh function, softmax function</li>
+</ul>
 </li>
-<li>this paper use <strong>CKKS</strong> to reduce computational complexity while safeguarding data privacy.
+<li>
+<p>this paper use <strong>CKKS</strong> to reduce computational complexity while safeguarding data privacy.</p>
 <ul>
 <li>simplifed activation function for RNN layer: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">f(x) =x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>  <font color="#ff0000">( but the accuracy ?</font></li>
 <li><u>client handles the attention mechanism</u>, while the server manages the prediction via RNN layer with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">f(x)=x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span></li>
 <li>attention mechanism with shallow networks, IMDb database for sentiment analysis</li>
 </ul>
 </li>
-<li></li>
 </ul>
+<blockquote>
+<p>supplement: 《BFV, CKKS, TFHE: which one is the best for a secure neural network evaluation in the cloud?》</p>
+</blockquote>
+<h1 id="related-work"><a class="markdownIt-Anchor" href="#related-work"></a> Related work</h1>
+<h2 id="privacy-and-security"><a class="markdownIt-Anchor" href="#privacy-and-security"></a> Privacy and Security</h2>
+<ul>
+<li>
+<p>Privacy mechanisms (anonymity, obfuscation): Different Privacy, Multi-party computation</p>
+</li>
+<li>
+<p>Security (confidentiality, integrity): encryption schemes, signature schemes</p>
+</li>
+<li>
+<p>Secure MPC: cloud providers are required to share part of their model with the client (😩), e.g., SecureML, MiniONN, SecureNN</p>
+</li>
+<li>
+<p>FHE: e.g., <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/04/CryptonetsTechReport.pdf">Cryptonets</a>, <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2012/323.pdf">ML Confidential</a></p>
+</li>
+</ul>
+<h2 id="acceleration"><a class="markdownIt-Anchor" href="#acceleration"></a> Acceleration</h2>
+<ul>
+<li>polynomial approximation: Taylor’s series, Chebyshev interpolation, and more numerical analysis methods. e.g., <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2018/758">Chimera</a>, <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1911.07101">Glyph</a></li>
+<li>CNN: CryptoDL, CryptoNN, <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.01827">GALA (speech recognition)</a> , <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2017/452.pdf">LSTM</a></li>
+<li>RNN: RHODE</li>
+</ul>
+<h1 id="methodology"><a class="markdownIt-Anchor" href="#methodology"></a> Methodology</h1>
+<h1 id="implementation"><a class="markdownIt-Anchor" href="#implementation"></a> Implementation</h1>
 </article>
 <div class="article-footer">
     <section id="license">
